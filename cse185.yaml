@@ -75,7 +75,7 @@ dependencies:
   - llvm-openmp=14.0.6=h0dcd299_0
   - lz4-c=1.9.4=hcec6c5f_0
   - lzo=2.10=haf1e3a3_2
-  - matplotlib-base=3.7.1=py310ha533b9c_1
+  - matplotlib-base=3.6.3=py310he725631_0
   - mkl=2023.1.0=h59209a4_43558
   - mkl_fft=1.3.6=py310h3ea8b11_1
   - mkl_random=1.2.2=py310h3ea8b11_1
@@ -156,7 +156,7 @@ dependencies:
     - llvmlite==0.39.1
     - lxml==4.9.2
     - markupsafe==2.1.1
-    - matplotlib==3.7.1
+    - matplotlib==3.6.3
     - matplotlib-inline==0.1.6
     - mistune==0.8.4
     - mkl-fft==1.3.6
@@ -213,3 +213,4 @@ dependencies:
     - websocket-client==0.58.0
     - wheel==0.38.4
     - zipp==3.11.0
+prefix: /Users/GordonYe/miniconda3/envs/cse185
