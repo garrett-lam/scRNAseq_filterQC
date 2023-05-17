@@ -10,6 +10,7 @@ def main():
     #sns.histplot(anndata.obs["pct_counts_mt"])
     plt.show()
     #print(test)
+    return
 
 if __name__ == "__main__":
     main()
