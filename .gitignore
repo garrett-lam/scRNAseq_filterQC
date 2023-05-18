@@ -1,2 +1,4 @@
 anndata_with_QCMetrics.h5ad
 anndata_with_QCMetrics.h5ad.gz
+cache
+__pycache__
