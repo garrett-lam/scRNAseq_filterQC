@@ -13,3 +13,24 @@ There are 2 ways to set up the environment: `conda env create -f cse185.yaml` or
     - For data points with a p-value < 0.05 or p-value < 0.01, winsorize them or remove them
  4. Perform clustering of the cells using the Leiden algorithm
  5. Assess clustering results using t-SNE and UMAP visualizations and objective measures
+
+
+## Manual Preprocessing Steps:
+- Ensure barcodes, features, matrix files are formatted in the following way:
+
+`[filename]_barcodes.tsv`
+- Column 1: Barcodes
+
+`[filename]_features.tsv`
+- Column 1: Gene IDs
+- Column 2: Gene Symbols
+- Column 3: 'Gene Expression'
+
+`[filename]_matrix.mtx`
+- First line in file must be: %%MatrixMarket matrix coordinate real general 
+- Second line contains dimensions of the matrix and total number of non-zero entries in the format: rows columns non-zero entries
+
+Following lines after the first two lines must be numeric values
+- Column 1: Row index of matrix (gene/feature)
+- Column 2: Column index of matrix (cell)
+- Column 3: Value of matrix entry (expression level of gene in cell)
