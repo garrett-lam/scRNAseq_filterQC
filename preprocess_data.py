@@ -13,20 +13,15 @@ def preprocess_data(data_dir):
         if re.search(pattern, basename):
             datasets.append(re.search(pattern,basename).group(1)) # adds name of dataset to datasets
 
-    print(datasets)
     adatas = {}
     adata_obj = None
-    if len(datasets) > 1:
-        for ds in datasets:
-            adatas[ds] = sc.read_10x_mtx(data_dir, prefix=ds+"_", cache=True)
-        adata_obj = ad.concat(adatas, label="dataset")
-    else:
-        for ds in datasets:
-            adata_obj = sc.read_10x_mtx(data_dir, prefix=ds+"_", cache=True)
-    
+
+    for ds in datasets:
+        adatas[ds] = sc.read_10x_mtx(data_dir, prefix=ds+"_", cache=True)
+    adata_obj = ad.concat(adatas, label="dataset")
     adata_obj.obs_names_make_unique()
 
-    print(adata_obj.obs['dataset'])
+    print(adata_obj)
 
     # to filter cells
     sc.pp.filter_cells(adata_obj, min_genes=200)
