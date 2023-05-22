@@ -24,8 +24,10 @@ dependencies:
   - decorator=5.1.1=pyhd3eb1b0_0
   - defusedxml=0.7.1=pyhd3eb1b0_0
   - dunamai=1.16.0=pyhd8ed1ab_0
+  - easydev=0.12.0=pyh6c4a22f_0
   - executing=0.8.3=pyhd3eb1b0_0
   - expat=2.4.9=he9d5cce_0
+  - fitter=1.4.1=pyh5e36f6f_0
   - fonttools=4.25.0=pyhd3eb1b0_0
   - freetype=2.12.1=hd8bbffd_0
   - gdbm=1.18=hdccc71a_4
@@ -131,7 +133,9 @@ dependencies:
     - brotlipy==0.7.0
     - certifi==2023.5.7
     - cffi==1.15.1
+    - click==8.0.4
     - colorama==0.4.6
+    - colorlog==5.0.1
     - comm==0.1.2
     - contourpy==1.0.5
     - cryptography==39.0.1
