@@ -6,6 +6,9 @@ There are 2 ways to set up the environment: `conda env create -f cse185.yaml` or
 ## Notes
  - Call `gunzip anndata_with_QCMetrics.h5ad.gz` to use the anndata object.
 
+## How to run test example (`pbmc_test`):
+`python scRNAseq_filter.py pbmc_test/`
+
 ## Plan
  1. Fit count QC metrics (`n_genes_by_count`, `total_counts`) to the Poisson Distribution
  2. Fit continuous QC metrics (``pct_counts_mt`) to the Weibull Distribution
@@ -16,7 +19,7 @@ There are 2 ways to set up the environment: `conda env create -f cse185.yaml` or
 
 
 ## Manual Preprocessing Steps:
-- Ensure barcodes, features, matrix files are formatted in the following way:
+**IMPORTANT:** Ensure barcodes, features, matrix files are formatted in the following way:
 
 `[filename]_barcodes.tsv`
 - Column 1: Barcodes
