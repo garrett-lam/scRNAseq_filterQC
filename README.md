@@ -1,7 +1,9 @@
 # scRNAseq_filterQC
 
 ## Environment Setup
-There are 2 ways to set up the environment: `conda env create -f cse185.yaml` or `micromamba env create --name cse185 --file cse185_micromamba.yaml`. Depending on the method used, use `conda activate cse185` or `micromamba activate cse185` to activate the environment.
+There are 2 ways to set up the environment: 
+- Create environment using `conda env create -f cse185.yaml` then `conda activate cse185` to activate the environment 
+- Create environment using `micromamba env create --name cse185 --file cse185_micromamba.yaml` then `micromamba activate cse185` to activate the environment.
 
 ## Manual Preprocessing Steps:
 **IMPORTANT:** Ensure barcodes, features, matrix files are formatted in the following way:
@@ -15,8 +17,8 @@ There are 2 ways to set up the environment: `conda env create -f cse185.yaml` or
 - Column 3: 'Gene Expression'
 
 `[filename]_matrix.mtx`
-- First line in file must be: %%MatrixMarket matrix coordinate real general 
-- Second line contains dimensions of the matrix and total number of non-zero entries in the format: rows columns non-zero entries
+- First line in file must be: `%%MatrixMarket matrix coordinate real general`
+- Second line contains dimensions of the matrix and total number of non-zero entries in the format: rows, columns, non-zero entries
 
 Following lines after the first two lines must be numeric values
 - Column 1: Row index of matrix (gene/feature)
