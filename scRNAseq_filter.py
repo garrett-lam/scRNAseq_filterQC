@@ -23,6 +23,7 @@ def main():
     adata_obj = preprocess_data.preprocess_data(data_dir)
     n_genes_by_counts.cutoff_005(adata_obj)
     total_counts.cutoff_005(adata_obj)
+    pct_counts_mt.cutoff_005(adata_obj)
 
     return
 
