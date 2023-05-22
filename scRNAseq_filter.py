@@ -3,6 +3,9 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import argparse
 import preprocess_data
+import n_genes_by_counts
+import total_counts
+import pct_counts_mt
 
 # MAIN DRIVER
 def main():
@@ -17,7 +20,10 @@ def main():
     args = parser.parse_args()
 
     data_dir = args.dir 
-    preprocess_data.preprocess_data(data_dir)
+    adata_obj = preprocess_data.preprocess_data(data_dir)
+    n_genes_by_counts.cutoff_005(adata_obj)
+    total_counts.cutoff_005(adata_obj)
+
     return
 
 if __name__ == "__main__":

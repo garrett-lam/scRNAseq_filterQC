@@ -21,8 +21,6 @@ def preprocess_data(data_dir):
     adata_obj = ad.concat(adatas, label="dataset")
     adata_obj.obs_names_make_unique()
 
-    print(adata_obj)
-
     # to filter cells
     sc.pp.filter_cells(adata_obj, min_genes=200)
     sc.pp.filter_cells(adata_obj, min_counts=1000)
@@ -34,5 +32,8 @@ def preprocess_data(data_dir):
     adata_obj.var['mt'] = adata_obj.var_names.str.startswith('MT-')  # annotate the group of mitochondrial genes as 'mt'
     sc.pp.calculate_qc_metrics(adata_obj, qc_vars=['mt'], percent_top=None, log1p=False, inplace=True)
 
+    #print(type(adata_obj.obs['n_genes_by_counts']))
+
     print(f'Number of Genes in adata_obj (after filtering): {adata_obj.n_vars}')
     print(f'Number of Cells in adata_obj (after filtering): {adata_obj.n_obs}')
+    return adata_obj
