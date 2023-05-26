@@ -4,7 +4,9 @@
 
 ## Install Instructions & Environment Setup
 There are 2 ways to set up the environment: 
+### If you have conda 
  - Create environment using `conda env create -f cse185.yaml`. Then call `conda activate cse185` to activate the environment .
+### If you have micromamba
  - Create environment using `micromamba env create --name cse185 --file cse185_micromamba.yaml`. Then call `micromamba activate cse185` to activate the environment.
 
 ## Manual Preprocessing Steps:
@@ -28,7 +30,7 @@ Following lines after the first two lines must be numeric values
  - **Column 3:** Value of matrix entry (expression level of gene in cell)
 
 ## Basic Usage:
-Call `python scRNAseq_filter.py data_dir/`, where `data_dir/` contains where barcodes, features, and matrix files 
+Call `python scRNAseq_filter.py data_dir/`, where `data_dir/` is the directory that contains barcodes, features, and matrix files. 
 
-## How to run test example (`pbmc_test`):
+## How to run test example using the test dataset(`pbmc_test`):
 `python scRNAseq_filter.py pbmc_test/`
