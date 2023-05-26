@@ -21,10 +21,13 @@ def main():
 
     data_dir = args.dir 
     adata_obj = preprocess_data.preprocess_data(data_dir)
-    n_genes_by_counts.cutoff_005(adata_obj)
-    total_counts.cutoff_005(adata_obj)
-    pct_counts_mt.cutoff_005(adata_obj)
+    n_genes_by_counts_dist = n_genes_by_counts.find_distributions(adata_obj)
+    total_counts_dist = total_counts.find_distributions(adata_obj)
+    pct_counts_mt_dist = pct_counts_mt.find_distributions(adata_obj)
 
+    print(f'n_genes_by_counts: {n_genes_by_counts_dist}')
+    print(f'total_counts: {total_counts_dist}')
+    print(f'pct_counts_mt: {pct_counts_mt_dist}')
     return
 
 if __name__ == "__main__":
