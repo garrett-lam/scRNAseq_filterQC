@@ -19,7 +19,9 @@ There are 2 ways to set up the environment:
 - **Column 3:** The string: 'Gene Expression'
 
 `[filename]_matrix.mtx`
+
 First line contains dimensions of the matrix and total number of non-zero entries in the format: rows, columns, non-zero entries
+
 Following lines after the first two lines must be numeric values
 - **Column 1:** Row index of matrix (gene/feature)
 - **Column 2:** Column index of matrix (cell)
