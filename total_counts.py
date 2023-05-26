@@ -7,7 +7,7 @@ def find_distributions(adata_obj):
     values = adata_obj.obs['total_counts'].values
     hist = sns.displot(data=values, kind="hist")
     #f = Fitter(values, distributions=['weibull_min', 'gamma', 'invgamma', 'rayleigh'])
-    f = Fitter(values, distributions=get_distributions())
+    f = Fitter(values, distributions=get_common_distributions())
     f.fit()
     print(f.summary())
     hist.fig.savefig('bestdist_total_counts.png')
