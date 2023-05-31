@@ -10,6 +10,7 @@ The, there are 2 ways to set up the environment (you only need to do one of thes
  - __If you use/prefer micromamba__: Create environment using `micromamba env create --name cse185 --file cse185_micromamba.yaml`. Then call `micromamba activate cse185` to activate the environment.
 
 _Note: the environment creation step may take a while (this is normal) and may throw warnings/messages (these may safely be ignored)._
+___Datahub Note___: you may encounter issues with setting up the environments on Datahub. If this is the case, we highly recommend you clone the repo and set up the environment on a local macOS/Linux machine.
 
 ## Manual Preprocessing Steps:
 **IMPORTANT:** Ensure barcodes, features, matrix files are formatted in the following way:
