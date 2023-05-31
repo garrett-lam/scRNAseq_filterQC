@@ -9,7 +9,7 @@ There are 2 ways to set up the environment:
 
 ### If you have conda 
  - Create environment using `conda env create -f cse185.yaml`. Then call `conda activate cse185` to activate the environment \.
- - 
+
 ### If you have micromamba
  - Create environment using `micromamba env create --name cse185 --file cse185_micromamba.yaml`. Then call `micromamba activate cse185` to activate the environment.
 
