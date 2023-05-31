@@ -5,13 +5,9 @@
 ## Install Instructions & Environment Setup
 First, clone the repo by calling `git clone https://github.com/garrett-lam/scRNAseq_filterQC.git`. Then, change into the directory using `cd scRNAseq_filterQC`.
 
-There are 2 ways to set up the environment: 
-
-### If you have conda 
- - Create environment using `conda env create -f cse185.yaml`. Then call `conda activate cse185` to activate the environment \.
-
-### If you have micromamba
- - Create environment using `micromamba env create --name cse185 --file cse185_micromamba.yaml`. Then call `micromamba activate cse185` to activate the environment.
+The, there are 2 ways to set up the environment (you only need to do one of these): 
+ - __If you use/prefer conda__: Create environment using `conda env create -f cse185.yaml`. Then call `conda activate cse185` to activate the environment.
+ - __If you use/prefer micromamba__: Create environment using `micromamba env create --name cse185 --file cse185_micromamba.yaml`. Then call `micromamba activate cse185` to activate the environment.
 
 ## Manual Preprocessing Steps:
 **IMPORTANT:** Ensure barcodes, features, matrix files are formatted in the following way:
