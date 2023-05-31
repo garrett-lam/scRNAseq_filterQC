@@ -33,7 +33,9 @@ Following lines after the first two lines must be numeric values
  - **Column 3:** Value of matrix entry (expression level of gene in cell)
 
 ## Basic Usage:
-Call `python scRNAseq_filter.py data_dir/`, where `data_dir/` is the directory that contains barcodes, features, and matrix files. 
+Call `python scRNAseq_filter.py data_dir/ p_value`
+- `data_dir/` is the directory that contains barcodes, features, and matrix files. 
+- `p_value` p-value threshold to define outliers for QC filtering removal
 
 ## How to run test example using the test dataset(`pbmc_test`):
-`python scRNAseq_filter.py pbmc_test/`
+`python scRNAseq_filter.py pbmc_test/ 0.01`
