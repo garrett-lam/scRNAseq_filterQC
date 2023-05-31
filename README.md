@@ -9,6 +9,8 @@ The, there are 2 ways to set up the environment (you only need to do one of thes
  - __If you use/prefer conda__: Create environment using `conda env create -f cse185.yaml`. Then call `conda activate cse185` to activate the environment.
  - __If you use/prefer micromamba__: Create environment using `micromamba env create --name cse185 --file cse185_micromamba.yaml`. Then call `micromamba activate cse185` to activate the environment.
 
+_Note: the environment creation step may take a while (this is normal) and may throw warnings/messages (these may safely be ignored)._
+
 ## Manual Preprocessing Steps:
 **IMPORTANT:** Ensure barcodes, features, matrix files are formatted in the following way:
 
