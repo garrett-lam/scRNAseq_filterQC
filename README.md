@@ -5,12 +5,14 @@
 ## Install Instructions & Environment Setup
 First, clone the repo by calling `git clone https://github.com/garrett-lam/scRNAseq_filterQC.git`. Then, change into the directory using `cd scRNAseq_filterQC`.
 
-The, there are 2 ways to set up the environment (you only need to do one of these): 
+Then, there are 2 ways to set up the environment (you only need to do one of these): 
  - __If you use/prefer conda__: Create environment using `conda env create -f cse185.yaml`. Then call `conda activate cse185` to activate the environment.
  - __If you use/prefer micromamba__: Create environment using `micromamba env create --name cse185 --file cse185_micromamba.yaml`. Then call `micromamba activate cse185` to activate the environment.
 
-_Note: the environment creation step may take a while (this is normal) and may throw warnings/messages (these may safely be ignored)._
-___Datahub Note___: you may encounter issues with setting up the environments on Datahub. If this is the case, we highly recommend you clone the repo and set up the environment on a local macOS/Linux machine.
+___Important Notes___:
+ - The environment creation step may take a while (this is normal) and may throw warnings/messages (these may safely be ignored).
+ - You may encounter issues with setting up the environments on Datahub. If this is the case, we highly recommend you clone the repo and set up the environment on a local macOS/Linux machine. That being said, the following special steps are needed to get things to work on Datahub:
+    - If you get `CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.` when calling `conda activate cse185`, follow the onscreen directions by running `conda init bash` (that is the shell used on Datahub) and closing/restarting your shell. Then, instead of calling `conda activate cse185`, call `source activate cse185` to activate the environment.
 
 ## Manual Preprocessing Steps:
 **IMPORTANT:** Ensure barcodes, features, matrix files are formatted in the following way:
