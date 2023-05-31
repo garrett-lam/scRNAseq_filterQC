@@ -39,7 +39,7 @@ def main():
     print(f'total_counts: {total_counts_dist}')
     print(f'pct_counts_mt: {pct_counts_mt_dist}')
 
-    # get cutoff value for p < 0.05
+    # get cutoff value for p < p_value
     print()
     print(f'n_gene_by_counts cutoff value (p < {p_value})', n_genes_by_counts.find_cutoff(n_genes_by_counts_dist, p_value))
     print(f'total_counts cutoff value (p < {p_value})', total_counts.find_cutoff(total_counts_dist, p_value))
