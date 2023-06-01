@@ -1,6 +1,3 @@
-import scanpy as sc
-import seaborn as sns
-import matplotlib.pyplot as plt
 import argparse
 import preprocess_data
 import n_genes_by_counts
@@ -48,4 +45,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    

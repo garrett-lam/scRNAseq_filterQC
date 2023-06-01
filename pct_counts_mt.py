@@ -7,78 +7,91 @@ from fitter import Fitter, get_common_distributions
 def find_distributions(adata_obj):
     # extract the pct_count_mt values
     values = adata_obj.obs['pct_counts_mt'].values
+    
     # make a histogram using the values 
     hist = sns.displot(data=values, kind="hist")
+    
     # use the Fitter object/library to determine the best distribution that fit the data
     f = Fitter(values, distributions=get_common_distributions())
+    
     # plots the top 5 distributions
     f.fit()
+    
     # prints out top 5 distributions and statistics 
     print(f.summary())
+    
     # get the best histrogram 
     hist.fig.savefig('bestdist_pct_counts_mt.png')
+    
     # return the best distribution 
     best_dist = f.get_best()
     print()
+    
     # return best distrubution 
     return best_dist
 
 def find_cutoff(best_dist, p_value):
+
+    q = 1 - p_value
+    cutoff_value = None
+
     if best_dist.get('cauchy'):
-        cutoff_value = stats.cauchy.ppf(q = 1-p_value, 
+        cutoff_value = stats.cauchy.ppf(q, 
                                         loc=best_dist['cauchy']['loc'], 
                                         scale=best_dist['cauchy']['scale'])
-        return cutoff_value
+    
     elif best_dist.get('chi2'):
-        cutoff_value = stats.chi2.ppf(q = 1-p_value, 
+        cutoff_value = stats.chi2.ppf(q, 
                                       df=best_dist['chi2']['df'], 
                                       loc=best_dist['chi2']['loc'], 
                                       scale=best_dist['chi2']['scale'])
-        return cutoff_value
+    
     elif best_dist.get('expon'):
-        cutoff_value = stats.expon.ppf(q = 1-p_value, 
+        cutoff_value = stats.expon.ppf(q, 
                                        loc=best_dist['expon']['loc'], 
                                        scale=best_dist['expon']['scale'])
-        return cutoff_value
+    
     elif best_dist.get('exponpow'):
-        cutoff_value = stats.exponpow.ppf(q = 1-p_value, 
+        cutoff_value = stats.exponpow.ppf(q, 
                                           b=best_dist['exponpow']['b'], 
                                           loc=best_dist['exponpow']['loc'], 
                                           scale=best_dist['exponpow']['scale'])
-        return cutoff_value
+    
     elif best_dist.get('gamma'):
-        cutoff_value = stats.gamma.ppf(q = 1-p_value, 
+        cutoff_value = stats.gamma.ppf(q, 
                                        a=best_dist['gamma']['a'], 
                                        loc=best_dist['gamma']['loc'], 
                                        scale=best_dist['gamma']['scale'])
-        return cutoff_value
+    
     elif best_dist.get('lognorm'):
-        cutoff_value = stats.lognorm.ppf(q = 1-p_value, 
+        cutoff_value = stats.lognorm.ppf(q, 
                                          s=best_dist['lognorm']['s'], 
                                          loc=best_dist['lognorm']['loc'],
                                          scale=best_dist['lognorm']['scale'])
-        return cutoff_value
+    
     elif best_dist.get('norm'):
-        cutoff_value = stats.norm.ppf(q = 1-p_value, 
+        cutoff_value = stats.norm.ppf(q, 
                                       loc=best_dist['norm']['loc'], 
                                       scale=best_dist['norm']['scale'])
-        return cutoff_value
+    
     elif best_dist.get('powerlaw'):
-        cutoff_value = stats.powerlaw.ppf(q = 1-p_value, 
+        cutoff_value = stats.powerlaw.ppf(q, 
                                           a=best_dist['powerlaw']['a'], 
                                           loc=best_dist['powerlaw']['loc'], 
                                           scale=best_dist['powerlaw']['scale'])
-        return cutoff_value
+    
     elif best_dist.get('rayleigh'):
-        cutoff_value = stats.rayleigh.ppf(q = 1-p_value, 
+        cutoff_value = stats.rayleigh.ppf(q, 
                                           loc=best_dist['rayleigh']['loc'], 
                                           scale=best_dist['rayleigh']['scale'])
-        return cutoff_value
+    
     elif best_dist.get('uniform'):
-        cutoff_value = stats.uniform.ppf(q = 1-p_value, 
+        cutoff_value = stats.uniform.ppf(q, 
                                          loc=best_dist['uniform']['loc'], 
                                          scale=best_dist['uniform']['scale'])
-        return cutoff_value
+    
     else:
         print('Invalid distribution')
         return 
+    
+    return cutoff_value
