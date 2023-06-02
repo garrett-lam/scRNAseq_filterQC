@@ -34,9 +34,8 @@ def main():
     n_genes_by_counts_p_value = args.n_genes_by_counts_p_value
     total_counts_p_value = args.total_counts_p_value
     pct_counts_mt_p_value = args.pct_counts_mt_p_value
-    marker_genes = args.marker_genes # list 
+    marker_genes = args.marker_genes # list of strings
     
-    print(marker_genes)
     # preprocess data
     adata_obj = preprocess_data.preprocess_data(data_dir)
 
@@ -97,9 +96,9 @@ def main():
     sc.tl.leiden(adata_filt) # clusters cells based on expression profiles. This is needed to color cells by cluster. # ERROR HERE
 
     # UMAP 
-    # sc.tl.umap(adata_filt) # compute UMAP embedding
-    # sc.pl.umap(adata_filt, color="leiden") # plot UMAP, coloring cells by cluster
-    # #sc.pl.umap(adata_filt, color="dataset")  # plot UMAP, coloring cells by dataset
+    sc.tl.umap(adata_filt) # compute UMAP embedding
+    sc.pl.umap(adata_filt, color="leiden", save='_clusters.png') # plot UMAP, coloring cells by cluster
+    sc.pl.umap(adata_filt, color="dataset", save='_datasets.png')  # plot UMAP, coloring cells by dataset
 
     # tSNE
     sc.tl.tsne(adata_filt)
