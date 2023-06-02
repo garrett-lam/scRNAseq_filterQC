@@ -6,6 +6,7 @@ import pct_counts_mt
 import scanpy as sc
 import scanpy.external as sce
 import warnings
+import subprocess
 
 # MAIN DRIVER
 def main():
@@ -20,19 +21,24 @@ def main():
     
     # Positional Args
     parser.add_argument('dir', help='Directory containing scRNA-seq barcodes, features, matrix files', type=str)
-    parser.add_argument('p_value', help='p-value threshold to define outliers for QC filtering removal', type=float)
-   
+    parser.add_argument('n_genes_by_counts_p_value', help='n_genes_by_counts p-value threshold to define outliers for QC filtering removal', type=float)
+    parser.add_argument('total_counts_p_value', help='total_counts p-value threshold to define outliers for QC filtering removal', type=float)
+    parser.add_argument('pct_counts_mt_p_value', help='pct_counts_mt p-value threshold to define outliers for QC filtering removal', type=float)
+
     # Parse args
     args = parser.parse_args()
 
     # directory that contains features, barcode, and matrix files
     data_dir = args.dir 
-    p_value = args.p_value
+    n_genes_by_counts_p_value = args.n_genes_by_counts_p_value
+    total_counts_p_value = args.total_counts_p_value
+    pct_counts_mt_p_value = args.pct_counts_mt_p_value
     
     # preprocess data
     adata_obj = preprocess_data.preprocess_data(data_dir)
 
     # find the best distribution for the three catagories
+    subprocess.run(["mkdir", "-p", "figures"])
     n_genes_by_counts_dist = n_genes_by_counts.find_distributions(adata_obj)
     total_counts_dist = total_counts.find_distributions(adata_obj)
     pct_counts_mt_dist = pct_counts_mt.find_distributions(adata_obj)
@@ -45,13 +51,13 @@ def main():
     # get cutoff value for p < p_value
     print()
 
-    n_genes_by_counts_cutoff = n_genes_by_counts.find_cutoff(n_genes_by_counts_dist, p_value)
-    total_counts_cutoff = total_counts.find_cutoff(total_counts_dist, p_value)
-    pct_counts_mt_cutoff = pct_counts_mt.find_cutoff(pct_counts_mt_dist, p_value)
+    n_genes_by_counts_cutoff = n_genes_by_counts.find_cutoff(n_genes_by_counts_dist, n_genes_by_counts_p_value)
+    total_counts_cutoff = total_counts.find_cutoff(total_counts_dist, total_counts_p_value)
+    pct_counts_mt_cutoff = pct_counts_mt.find_cutoff(pct_counts_mt_dist, pct_counts_mt_p_value)
 
-    print(f'n_gene_by_counts cutoff value (p < {p_value})', n_genes_by_counts_cutoff)
-    print(f'total_counts cutoff value (p < {p_value})', total_counts_cutoff)
-    print(f'pct_counts_mt cutoff value (p < {p_value})', pct_counts_mt_cutoff)
+    print(f'n_gene_by_counts cutoff value (p < {n_genes_by_counts_p_value})', n_genes_by_counts_cutoff)
+    print(f'total_counts cutoff value (p < {total_counts_p_value})', total_counts_cutoff)
+    print(f'pct_counts_mt cutoff value (p < {pct_counts_mt_p_value})', pct_counts_mt_cutoff)
 
     #filter the QC metrics 
     adata_obj = adata_obj[adata_obj.obs.n_genes_by_counts < n_genes_by_counts_cutoff, :] # SET TO NEW VARIABLE?
@@ -74,27 +80,38 @@ def main():
     - Highly variable genes
     - Genes in the set of cell-type specific marker genes used in the paper (see below). We will manually add these back, since we want to analyze them even if they didn't make the cut for being most differentially expressed.
     '''
+
+    genes = ["GCG", "TTR",  "IAPP",  "GHRL", "PPY", "COL3A1",
+        "CPA1", "CLPS", "REG1A", "CTRB1", "CTRB2", "PRSS2", "CPA2", "KRT19", "INS","SST","CELA3A", "VTCN1"]
+    
+    adata_filt = adata_obj[:, (adata_obj.var.index.isin(genes) | adata_obj.var["highly_variable"])]
+
     # Run PCA
-    sc.pp.pca(adata_obj, n_comps=20)
-    #sc.pl.pca(adata_obj, color="dataset", title='PCA plot before removing batch effects')
+    sc.pp.pca(adata_filt, n_comps=20)
 
     # Remove batch effects
-    sce.pp.harmony_integrate(adata_obj, 'dataset', theta=2, nclust=50,  max_iter_harmony = 10,  max_iter_kmeans=10)
+    sce.pp.harmony_integrate(adata_filt, 'dataset', theta=2, nclust=50,  max_iter_harmony = 10,  max_iter_kmeans=10)
 
     # Reset the original PCs to those computed by Harmony
-    adata_obj.obsm['X_pca'] = adata_obj.obsm['X_pca_harmony']
+    adata_filt.obsm['X_pca'] = adata_filt.obsm['X_pca_harmony']
 
     # Perform clustering
-    sc.pp.neighbors(adata_obj) # computes neighborhood graphs. Needed to run clustering.
-    sc.tl.leiden(adata_obj) # clusters cells based on expression profiles. This is needed to color cells by cluster. # ERROR HERE
+    sc.pp.neighbors(adata_filt) # computes neighborhood graphs. Needed to run clustering.
+    sc.tl.leiden(adata_filt) # clusters cells based on expression profiles. This is needed to color cells by cluster. # ERROR HERE
 
     # UMAP 
-    sc.tl.umap(adata_obj) # compute UMAP embedding
-    sc.pl.umap(adata_obj, color="leiden") # plot UMAP, coloring cells by cluster
-    sc.pl.umap(adata_obj, color="dataset")  # plot UMAP, coloring cells by dataset
+    # sc.tl.umap(adata_filt) # compute UMAP embedding
+    # sc.pl.umap(adata_filt, color="leiden") # plot UMAP, coloring cells by cluster
+    # #sc.pl.umap(adata_filt, color="dataset")  # plot UMAP, coloring cells by dataset
 
-    # we can include tSNE if you want but I think UMAP is better lol
+    # tSNE
+    sc.tl.tsne(adata_filt)
+    sc.pl.tsne(adata_filt, color=['leiden'], legend_loc='on data', legend_fontsize=10, alpha=0.8, size=20, save='_clusters.png')
+    sc.pl.tsne(adata_filt, color=['dataset'], legend_loc='on data', legend_fontsize=10, alpha=0.8, size=20, save='_datasets.png')
 
+    # gene expression checks
+    sc.pl.tsne(adata_filt, color=["INS","GCG","SST"], color_map="Reds", save='_major_genes.png')
+    sc.pl.tsne(adata_filt, color=genes, color_map="Reds", save='_all_genes.png')
     return
 
 if __name__ == "__main__":

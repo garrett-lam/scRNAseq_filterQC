@@ -21,7 +21,7 @@ def find_distributions(adata_obj):
     print(f.summary())
     
     # save histogram
-    hist.fig.savefig('bestdist_total_counts.png')
+    hist.fig.savefig('figures/best_dist_total_counts.png')
     
     # get the best distribution 
     best_dist = f.get_best()
