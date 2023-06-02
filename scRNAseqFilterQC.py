@@ -36,6 +36,7 @@ def main():
     pct_counts_mt_p_value = args.pct_counts_mt_p_value
     marker_genes = args.marker_genes # list 
     
+    print(marker_genes)
     # preprocess data
     adata_obj = preprocess_data.preprocess_data(data_dir)
 
@@ -106,8 +107,7 @@ def main():
     sc.pl.tsne(adata_filt, color=['dataset'], legend_loc='on data', legend_fontsize=10, alpha=0.8, size=20, save='_datasets.png')
 
     # gene expression checks
-    sc.pl.tsne(adata_filt, color=["INS","GCG","SST"], color_map="Reds", save='_major_genes.png')
-    sc.pl.tsne(adata_filt, color=marker_genes, color_map="Reds", save='_all_genes.png')
+    sc.pl.tsne(adata_filt, color=marker_genes, color_map="Reds", save='_marker_genes.png')
     return
 
 if __name__ == "__main__":

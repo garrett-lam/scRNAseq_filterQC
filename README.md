@@ -49,6 +49,6 @@ Call `python scRNAseqFilterQC.py data_dir/ [other options]`
 
 ## How to run the workflow using the dataset:
 ```
-python scRNAseqFilterQC.py counts/ -n 0.01 -t 0.01 -p 0.125 \ 
-    -g ["GCG", "TTR",  "IAPP",  "GHRL", "PPY", "COL3A1", "CPA1", "CLPS", "REG1A", "CTRB1", "CTRB2", "PRSS2", "CPA2", "KRT19", "INS","SST","CELA3A", "VTCN1"]
+python scRNAseqFilterQC.py counts/ -n 0.01 -t 0.01 -p 0.125 \
+    -g GCG TTR IAPP GHRL PPY COL3A1 CPA1 CLPS REG1A CTRB1 CTRB2 PRSS2 CPA2 KRT19 INS SST CELA3A VTCN1
 ```
