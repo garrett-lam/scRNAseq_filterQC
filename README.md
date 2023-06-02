@@ -1,4 +1,4 @@
-# scRNAseq_filterQC
+# scRNAseqFilterQC
 
 **Motivation/Description of Project:** As demonstrated in Lab 6, single-cell RNA-seq (scRNA-seq) data quality control has mostly been done qualitatively. Thresholds to filter out outliers are highly subjective and selected at the user's discretion via data visualizations. As a result, we wanted to take a more quantitative approach to standardize this process of outlier-removal. This project is focused on developing a python tool to streamline the process of quality control filtering of scRNA-seq data. Specifically, we will apply statistical models to identify discrete thresholds for outlier removal. We will start by focusing on the following QC metrics: percent mitochondrial read content, genes by counts, and total counts. 
 
@@ -38,14 +38,17 @@ Following lines after the first two lines must be numeric values
  - **Column 3:** Value of matrix entry (expression level of gene in cell)
 
 ## Basic Usage:
-Call `python scRNAseq_filter.py data_dir/ n_genes_by_counts_p_value total_counts_p_value pct_counts_mt_p_value`
+Call `python scRNAseqFilterQC.py data_dir/ [other options]`
 - `data_dir/` is the directory that contains barcodes, features, and matrix files. 
-- `n_genes_by_counts_p_value` p-value threshold to define outliers for QC filtering removal by `n_genes_by_counts`
-- `total_counts_p_value` p-value threshold to define outliers for QC filtering removal by `total_counts`
-- `pct_counts_mt_p_value` p-value threshold to define outliers for QC filtering removal by `pct_counts_mt`
+
+## scRNAseqFilterQC options
+- `-n'` or `--n_genes_by_counts_p_value`: p-value threshold to define outliers for QC filtering removal by `n_genes_by_counts`
+- `-t` or `--total_counts_p_value`: p-value threshold to define outliers for QC filtering removal by `total_counts`
+- `-p` or `--pct_counts_mt_p_value`: p-value threshold to define outliers for QC filtering removal by `pct_counts_mt`
+- `-g` or `--marker_genes`: Cell-type specific marker genes of interest
 
 ## How to run the workflow using the dataset:
-`python scRNAseq_filter.py pbmc_test/ 0.01 0.01 0.125`
-
-~~## How to run test example using the test dataset(`pbmc_test`):~~
-~~`python scRNAseq_filter.py pbmc_test/ 0.01`~~
+```
+python scRNAseqFilterQC.py counts/ -n 0.01 -t 0.01 -p 0.125 \ 
+    -g ["GCG", "TTR",  "IAPP",  "GHRL", "PPY", "COL3A1", "CPA1", "CLPS", "REG1A", "CTRB1", "CTRB2", "PRSS2", "CPA2", "KRT19", "INS","SST","CELA3A", "VTCN1"]
+```

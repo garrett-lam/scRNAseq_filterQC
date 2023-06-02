@@ -21,9 +21,10 @@ def main():
     
     # Positional Args
     parser.add_argument('dir', help='Directory containing scRNA-seq barcodes, features, matrix files', type=str)
-    parser.add_argument('n_genes_by_counts_p_value', help='n_genes_by_counts p-value threshold to define outliers for QC filtering removal', type=float)
-    parser.add_argument('total_counts_p_value', help='total_counts p-value threshold to define outliers for QC filtering removal', type=float)
-    parser.add_argument('pct_counts_mt_p_value', help='pct_counts_mt p-value threshold to define outliers for QC filtering removal', type=float)
+    parser.add_argument('-n', '--n_genes_by_counts_p_value', help='n_genes_by_counts p-value threshold to define outliers for QC filtering removal', type=float)
+    parser.add_argument('-t', '--total_counts_p_value', help='total_counts p-value threshold to define outliers for QC filtering removal', type=float)
+    parser.add_argument('-p', '--pct_counts_mt_p_value', help='pct_counts_mt p-value threshold to define outliers for QC filtering removal', type=float)
+    parser.add_argument('-g', '--marker_genes', help='Cell-type specific marker genes of interest', nargs='*', type=str, default=[]) # 0 or more occurrences
 
     # Parse args
     args = parser.parse_args()
@@ -33,6 +34,7 @@ def main():
     n_genes_by_counts_p_value = args.n_genes_by_counts_p_value
     total_counts_p_value = args.total_counts_p_value
     pct_counts_mt_p_value = args.pct_counts_mt_p_value
+    marker_genes = args.marker_genes # list 
     
     # preprocess data
     adata_obj = preprocess_data.preprocess_data(data_dir)
@@ -60,7 +62,7 @@ def main():
     print(f'pct_counts_mt cutoff value (p < {pct_counts_mt_p_value})', pct_counts_mt_cutoff)
 
     #filter the QC metrics 
-    adata_obj = adata_obj[adata_obj.obs.n_genes_by_counts < n_genes_by_counts_cutoff, :] # SET TO NEW VARIABLE?
+    adata_obj = adata_obj[adata_obj.obs.n_genes_by_counts < n_genes_by_counts_cutoff, :] 
     adata_obj = adata_obj[adata_obj.obs.total_counts < total_counts_cutoff, :]
     adata_obj = adata_obj[adata_obj.obs.pct_counts_mt < pct_counts_mt_cutoff, :]
 
@@ -73,18 +75,12 @@ def main():
     # get top 500 variable genes
     sc.pp.highly_variable_genes(adata_obj, batch_key="dataset", n_top_genes=500)
 
-    print(adata_obj.var[adata_obj.var['highly_variable']].sort_values(by='dispersions_norm', ascending=False)) # OPTIONAL
-
-    ''' (FROM LAB6 )
-    # For the analyses below, we recommend making a new anndata object, which contains only:
-    - Highly variable genes
-    - Genes in the set of cell-type specific marker genes used in the paper (see below). We will manually add these back, since we want to analyze them even if they didn't make the cut for being most differentially expressed.
-    '''
-
-    genes = ["GCG", "TTR",  "IAPP",  "GHRL", "PPY", "COL3A1",
-        "CPA1", "CLPS", "REG1A", "CTRB1", "CTRB2", "PRSS2", "CPA2", "KRT19", "INS","SST","CELA3A", "VTCN1"]
+    print(adata_obj.var[adata_obj.var['highly_variable']].sort_values(by='dispersions_norm', ascending=False)) 
     
-    adata_filt = adata_obj[:, (adata_obj.var.index.isin(genes) | adata_obj.var["highly_variable"])]
+    if marker_genes:
+        adata_filt = adata_obj[:, (adata_obj.var.index.isin(marker_genes) | adata_obj.var["highly_variable"])]
+    else:
+        adata_filt = adata_obj[:, (adata_obj.var["highly_variable"])]
 
     # Run PCA
     sc.pp.pca(adata_filt, n_comps=20)
@@ -111,7 +107,7 @@ def main():
 
     # gene expression checks
     sc.pl.tsne(adata_filt, color=["INS","GCG","SST"], color_map="Reds", save='_major_genes.png')
-    sc.pl.tsne(adata_filt, color=genes, color_map="Reds", save='_all_genes.png')
+    sc.pl.tsne(adata_filt, color=marker_genes, color_map="Reds", save='_all_genes.png')
     return
 
 if __name__ == "__main__":
