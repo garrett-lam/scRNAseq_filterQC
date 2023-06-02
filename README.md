@@ -38,9 +38,14 @@ Following lines after the first two lines must be numeric values
  - **Column 3:** Value of matrix entry (expression level of gene in cell)
 
 ## Basic Usage:
-Call `python scRNAseq_filter.py data_dir/ p_value`
+Call `python scRNAseq_filter.py data_dir/ n_genes_by_counts_p_value total_counts_p_value pct_counts_mt_p_value`
 - `data_dir/` is the directory that contains barcodes, features, and matrix files. 
-- `p_value` p-value threshold to define outliers for QC filtering removal
+- `n_genes_by_counts_p_value` p-value threshold to define outliers for QC filtering removal by `n_genes_by_counts`
+- `total_counts_p_value` p-value threshold to define outliers for QC filtering removal by `total_counts`
+- `pct_counts_mt_p_value` p-value threshold to define outliers for QC filtering removal by `pct_counts_mt`
 
-## How to run test example using the test dataset(`pbmc_test`):
-`python scRNAseq_filter.py pbmc_test/ 0.01`
+## How to run the workflow using the dataset:
+`python scRNAseq_filter.py pbmc_test/ 0.01 0.01 0.125`
+
+~~## How to run test example using the test dataset(`pbmc_test`):~~
+~~`python scRNAseq_filter.py pbmc_test/ 0.01`~~
