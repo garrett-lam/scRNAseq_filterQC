@@ -103,14 +103,14 @@ def main():
     sc.tl.umap(adata_filt) # compute UMAP embedding
     sc.pl.umap(adata_filt, color="leiden", save='_clusters.png') # plot UMAP, coloring cells by cluster
     sc.pl.umap(adata_filt, color="dataset", save='_datasets.png')  # plot UMAP, coloring cells by dataset
+    sc.pl.umap(adata_filt, color=marker_genes, color_map="Reds", save='_marker_genes.png')
 
     # tSNE
-    # sc.tl.tsne(adata_filt)
-    # sc.pl.tsne(adata_filt, color=['leiden'], legend_loc='on data', legend_fontsize=10, alpha=0.8, size=20, save='_clusters.png')
-    # sc.pl.tsne(adata_filt, color=['dataset'], legend_loc='on data', legend_fontsize=10, alpha=0.8, size=20, save='_datasets.png')
-
-    # gene expression checks
-    sc.pl.umap(adata_filt, color=marker_genes, color_map="Reds", save='_marker_genes.png')
+    sc.tl.tsne(adata_filt)
+    sc.pl.tsne(adata_filt, color=['leiden'], legend_loc='on data', legend_fontsize=10, alpha=0.8, size=20, save='_clusters.png')
+    sc.pl.tsne(adata_filt, color=['dataset'], legend_loc='on data', legend_fontsize=10, alpha=0.8, size=20, save='_datasets.png')
+    sc.pl.tsne(adata_filt, color=marker_genes, color_map="Reds", save='_marker_genes.png')
+    
     return
 
 if __name__ == "__main__":
