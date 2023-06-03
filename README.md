@@ -76,7 +76,7 @@ python scRNAseqFilterQC.py counts/ -n 0.01 -t 0.01 -p 0.125 \
 
 __Real World Data (pbmc3k)__
 ```
-python scRNAseqFilterQC.py pbmc_test/ -n 0.01 -t 0.01 -p 0.125 \
+python scRNAseqFilterQC.py pbmc_test/ -n 0.01 -t 0.01 -p 0.01 \
     -g IL7R CD79A MS4A1 CD8A CD8B LYZ CD14 LGALS3 S100A8 GNLY NKG7 KLRB1 FCGR3A MS4A7 FCER1A CST3 PPBP
 ```
 
