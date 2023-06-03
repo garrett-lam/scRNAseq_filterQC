@@ -18,8 +18,7 @@ dependencies:
   - brotli-bin=1.0.9
   - bzip2=1.0.8
   - c-ares=1.19.0
-  - ca-certificates=2023.5.7
-  - certifi=2023.5.7
+  - ca-certificates=2023.01.10
   - charset-normalizer=2.0.4
   - curl=7.88.1
   - cycler=0.11.0
@@ -95,7 +94,7 @@ dependencies:
   - natsort=7.1.1
   - ncurses=6.4
   - numpy-base=1.23.5
-  - openssl=1.1.1u
+  - openssl=1.1.1t
   - pandocfilters=1.5.0
   - parso=0.8.3
   - pcre2=10.37
@@ -113,10 +112,11 @@ dependencies:
   - python-dateutil=2.8.2
   - python-fastjsonschema=2.16.2
   - python-igraph=0.9.11
-  - python_abi=3.10=2_cp310
+  - python_abi=3.10
   - readline=8.2
-  - scanpy=1.7.2
+  - scanpy=1.9.3
   - send2trash=1.8.0
+  - session-info=1.0.0
   - setuptools_scm=7.0.4
   - sinfo=0.3.1
   - six=1.16.0
@@ -143,6 +143,7 @@ dependencies:
     - beautifulsoup4==4.12.2
     - bottleneck==1.3.5
     - brotlipy==0.7.0
+    - certifi==2023.5.7
     - cffi==1.15.1
     - click==8.0.4
     - colorama==0.4.6
