@@ -48,7 +48,15 @@ Call `python scRNAseqFilterQC.py data_dir/ [other options]`
 - `-g` or `--marker_genes`: Cell-type specific marker genes of interest
 
 ## How to run the workflow using the dataset:
+**Lab 6 Data**
 ```
 python scRNAseqFilterQC.py counts/ -n 0.01 -t 0.01 -p 0.125 \
     -g GCG TTR IAPP GHRL PPY COL3A1 CPA1 CLPS REG1A CTRB1 CTRB2 PRSS2 CPA2 KRT19 INS SST CELA3A VTCN1
 ```
+
+**Real World Data (pbmc3k)**
+```
+python scRNAseqFilterQC.py pbmc_test/ -n 0.01 -t 0.01 -p 0.125 \
+    -g IL7R CD79A MS4A1 CD8A CD8B LYZ CD14 LGALS3 S100A8 GNLY NKG7 KLRB1 FCGR3A MS4A7 FCER1A CST3 PPBP
+```
+

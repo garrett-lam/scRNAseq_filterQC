@@ -7,11 +7,12 @@ import scanpy as sc
 import scanpy.external as sce
 import warnings
 import subprocess
+import os
 
 # MAIN DRIVER
 def main():
-    warnings.filterwarnings("ignore")
-    warnings.filterwarnings("ignore", category=DeprecationWarning, module=".*mkl.*")
+    
+    warnings.filterwarnings("ignore") # Filter out warnings
 
     # Create arg parser obj
     parser = argparse.ArgumentParser(
@@ -29,28 +30,31 @@ def main():
     # Parse args
     args = parser.parse_args()
 
-    # directory that contains features, barcode, and matrix files
-    data_dir = args.dir 
+    data_dir = args.dir # Directory that contains features, barcode, and matrix files
     n_genes_by_counts_p_value = args.n_genes_by_counts_p_value
     total_counts_p_value = args.total_counts_p_value
     pct_counts_mt_p_value = args.pct_counts_mt_p_value
     marker_genes = args.marker_genes # list of strings
     
-    # preprocess data
+    # Preprocess data
     adata_obj = preprocess_data.preprocess_data(data_dir)
 
-    # find the best distribution for the three catagories
+    out_dir = data_dir[:-1] + '_' + str(n_genes_by_counts_p_value) + '_' + str(total_counts_p_value) + '_' + str(pct_counts_mt_p_value)
+    subprocess.run(["mkdir", "-p", out_dir])
+    os.chdir(out_dir)
+
+    # Find the best distribution for the three catagories
     subprocess.run(["mkdir", "-p", "figures"])
     n_genes_by_counts_dist = n_genes_by_counts.find_distributions(adata_obj)
     total_counts_dist = total_counts.find_distributions(adata_obj)
     pct_counts_mt_dist = pct_counts_mt.find_distributions(adata_obj)
 
-    # return the best distribution for the three catagories
+    # Return the best distribution for the three catagories
     print(f'n_genes_by_counts: {n_genes_by_counts_dist}')
     print(f'total_counts: {total_counts_dist}')
     print(f'pct_counts_mt: {pct_counts_mt_dist}')
 
-    # get cutoff value for p < p_value
+    # Get cutoff value for p < p_value
     print()
 
     n_genes_by_counts_cutoff = n_genes_by_counts.find_cutoff(n_genes_by_counts_dist, n_genes_by_counts_p_value)
@@ -101,12 +105,12 @@ def main():
     sc.pl.umap(adata_filt, color="dataset", save='_datasets.png')  # plot UMAP, coloring cells by dataset
 
     # tSNE
-    sc.tl.tsne(adata_filt)
-    sc.pl.tsne(adata_filt, color=['leiden'], legend_loc='on data', legend_fontsize=10, alpha=0.8, size=20, save='_clusters.png')
-    sc.pl.tsne(adata_filt, color=['dataset'], legend_loc='on data', legend_fontsize=10, alpha=0.8, size=20, save='_datasets.png')
+    # sc.tl.tsne(adata_filt)
+    # sc.pl.tsne(adata_filt, color=['leiden'], legend_loc='on data', legend_fontsize=10, alpha=0.8, size=20, save='_clusters.png')
+    # sc.pl.tsne(adata_filt, color=['dataset'], legend_loc='on data', legend_fontsize=10, alpha=0.8, size=20, save='_datasets.png')
 
     # gene expression checks
-    sc.pl.tsne(adata_filt, color=marker_genes, color_map="Reds", save='_marker_genes.png')
+    sc.pl.umap(adata_filt, color=marker_genes, color_map="Reds", save='_marker_genes.png')
     return
 
 if __name__ == "__main__":
