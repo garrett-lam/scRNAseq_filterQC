@@ -9,11 +9,31 @@ Then, there are 2 ways to set up the environment (you only need to do one of the
  - __If you use/prefer conda__: Create environment using `conda env create -f cse185.yaml`. Then call `conda activate cse185` to activate the environment.
  - __If you use/prefer micromamba__: Create environment using `micromamba env create --name cse185 --file cse185_micromamba.yaml`. Then call `micromamba activate cse185` to activate the environment.
 
+___Environment setup was tested in the following machine configurations___:
+| Machine | Package Manager | Env setup works? | Code works? |
+| - | - | - | - |
+| Ubuntu Linux (Intel) | miniconda 22.3.1 | ✅ | ✅ |
+| Ubuntu Linux (Intel) | micromamba  1.4.3 | ❌ (unable to resolve packages) | NA |
+| Datahub | miniconda 4.10.2 | ✅ | ✅ |
+| Datahub | micromamba 1.4.3 | NA* | NA |
+| Mac (Intel) | miniconda 4.10.3 | ✅ | ❌ (segmentation fault) |
+| Mac (Intel) | micromamba 1.4.4 | ✅ | ✅ |
+| Mac (M1) | anaconda 4.13.0 | ✅ | ❌ (code hangs) |
+| Mac (M1) | micromamba 1.4.4 | ✅ | ✅ |
+| Mac (M1 Pro) | anaconda 23.3.1 | ❌ (unable to resolve packages) | NA |
+| Mac (M1 Pro) | micromamba 1.4.4 | ✅ | ✅ |
+
+*Unable to install micromamba properly (potentially due to permissions issues?)
+
+_Note that environment setup will likely fail on Windows machines as packages incuded were built for Linux/OSX/macOS_.
+
 ___Note for Datahub Users___:
- - If you get `CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.` when calling `conda activate cse185`, follow the onscreen directions by running `conda init bash` (that is the shell used on Datahub). After this, run the `exit` command, and then open a new Terminal. In this new Terminal, call  `source activate cse185` instead of `conda activate cse185` to activate the environment. ___If this happens to you, always use `source activate cse185` instead of `conda activate cse185`___.
+If you get `CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.` when calling `conda activate cse185`, follow the onscreen directions by running `conda init bash` (that is the shell used on Datahub). After this, run the `exit` command, and then open a new Terminal. 
+
+In this new Terminal, call  `source activate cse185` instead of `conda activate cse185` to activate the environment.
 
 ___General Notes___:
- - The environment creation step may take a while. This is normal.
+ - The environment creation step may take a while (8-10 minutes). This is normal.
  - If you are prompted with a message to update conda `==> WARNING: A newer version of conda exists. <==`, you may safely ignore it.
  - If you are prompted with a warning, `Warning: you have pip-installed dependences in your environment file, but you do not list pip itself as one of your conda dependencies...`, you may safely ignore it.
  - If you have weird errors with the `conda` environment (e.g., running into segfaults, code stalling, etc.), set up the `micromamba` environment and try running the code from there instead.
@@ -70,13 +90,16 @@ Within this folder, you can fine the following files:
 ## How to run the workflow using the dataset:
 __Lab 6 Data__
 ```
-python scRNAseqFilterQC.py counts/ -n 0.01 -t 0.01 -p 0.125 \
+python scRNAseqFilterQC.py counts/ -n 0.05 -t 0.05 -p 0.05 \
     -g GCG TTR IAPP GHRL PPY COL3A1 CPA1 CLPS REG1A CTRB1 CTRB2 PRSS2 CPA2 KRT19 INS SST CELA3A VTCN1
 ```
 
+_To get cutoffs similar to what is used in Lab 6, use `-n 0.01 -t 0.01 -p 0.125`_
+
 __Real World Data (pbmc3k)__
 ```
-python scRNAseqFilterQC.py pbmc_test/ -n 0.01 -t 0.01 -p 0.01 \
+python scRNAseqFilterQC.py pbmc_test/ -n 0.05 -t 0.05 -p 0.05 \
     -g IL7R CD79A MS4A1 CD8A CD8B LYZ CD14 LGALS3 S100A8 GNLY NKG7 KLRB1 FCGR3A MS4A7 FCER1A CST3 PPBP
 ```
 
+_To get cutoffs similar to what is used in the reference workflow (https://scanpy-tutorials.readthedocs.io/en/latest/pbmc3k.html), use `-n 0.01 -t 0.01 -p 0.125`_. The actual data used can be retrieved at https://support.10xgenomics.com/single-cell-gene-expression/datasets/1.1.0/pbmc3k.
