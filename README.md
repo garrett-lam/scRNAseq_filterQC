@@ -63,7 +63,7 @@ Call `python scRNAseqFilterQC.py data_dir/ [other options]`
 - `data_dir/` is the directory that contains barcodes, features, and matrix files. Note that when passing `data_dir`, you must include the `/` after the directory name.
 
 ## scRNAseqFilterQC options
-- `-n'` or `--n_genes_by_counts_p_value`: p-value threshold to define outliers for QC filtering removal by `n_genes_by_counts`
+- `-n` or `--n_genes_by_counts_p_value`: p-value threshold to define outliers for QC filtering removal by `n_genes_by_counts`
 - `-t` or `--total_counts_p_value`: p-value threshold to define outliers for QC filtering removal by `total_counts`
 - `-p` or `--pct_counts_mt_p_value`: p-value threshold to define outliers for QC filtering removal by `pct_counts_mt`
 - `-g` or `--marker_genes`: Cell-type specific marker genes of interest
