@@ -12,20 +12,20 @@ Then, there are 2 ways to set up the environment (you only need to do one of the
 ___Environment setup was tested in the following machine configurations___:
 | Machine | Package Manager | Env setup works? | Code works? |
 | - | - | - | - |
-| Ubuntu Linux (Intel) | miniconda 22.3.1 | ✅ | ✅ |
-| Ubuntu Linux (Intel) | micromamba  1.4.3 | ❌ (unable to resolve packages) | NA |
+| Ubuntu Linux 22.04.02 (Intel) | miniconda 22.3.1 | ✅ | ✅ |
+| Ubuntu Linux 22.04.02 (Intel) | micromamba  1.4.3 | ❌ (unable to resolve packages) | NA |
 | Datahub | miniconda 4.10.2 | ✅ | ✅ |
 | Datahub | micromamba 1.4.3 | NA* | NA |
-| Mac (Intel) | miniconda 4.10.3 | ✅ | ❌ (segmentation fault) |
-| Mac (Intel) | micromamba 1.4.4 | ✅ | ✅ |
-| Mac (M1) | anaconda 4.13.0 | ✅ | ❌ (code hangs) |
-| Mac (M1) | micromamba 1.4.4 | ✅ | ✅ |
-| Mac (M1 Pro) | anaconda 23.3.1 | ❌ (unable to resolve packages) | NA |
-| Mac (M1 Pro) | micromamba 1.4.4 | ✅ | ✅ |
+| macOS 13.4 (Intel) | miniconda 4.10.3 | ✅ | ❌ (segmentation fault) |
+| macOS 13.4 (Intel) | micromamba 1.4.4 | ✅ | ✅ |
+| macOS 13.4 (M1) | anaconda 4.13.0 | ✅ | ❌ (code hangs) |
+| macOS 13.4 (M1) | micromamba 1.4.4 | ✅ | ✅ |
+| macOS 13.2.1 (M1 Pro) | anaconda 23.3.1 | ❌ (unable to resolve packages) | NA |
+| macOS 13.2.1 (M1 Pro) | micromamba 1.4.4 | ✅ | ✅ |
 
 *Unable to install micromamba properly (potentially due to permissions issues?)
 
-_Note that environment setup will likely fail on Windows machines as packages incuded were built for Linux/OSX/macOS_.
+_Note that environment setup will likely fail on Windows machines as packages included were built for Linux/OSX/macOS_.
 
 ___Note for Datahub Users___:
 If you get `CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.` when calling `conda activate cse185`, follow the onscreen directions by running `conda init bash` (that is the shell used on Datahub). After this, run the `exit` command, and then open a new Terminal. 
